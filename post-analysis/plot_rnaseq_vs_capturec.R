@@ -69,7 +69,6 @@ p = ggplot(dat, aes(capturec_value, log2FoldChange_RNAseq)) +
     axis.text=element_text(size=15), 
     legend.title=element_text(size=12), 
     legend.text=element_text(size=10)) +
-  #guides(fill=guide_legend(title="New Legend Title")) +
   annotation_custom(
     grob = g,
     xmin = 20,
