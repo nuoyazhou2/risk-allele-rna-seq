@@ -7,6 +7,9 @@
 #' 
 
 library(ggplot2)
+library(ggrepel)
+
+set.seed(1234)
 
 # read in DESeq2 output file
 read_df = function(file, suffix, pval_cutoff=0.1, fc_cutoff=1.5) {
@@ -37,7 +40,11 @@ names(dat)[which(names(dat)=="Row.names")] = "gene"
 candidate_genes = c("CDH23","SIPA1","CNTN1","KRT8","FAIM2","ITGA5","KRT18")
 p = ggplot(dat, aes(x=log2FoldChange_risk, y=log2FoldChange_ko)) + 
   geom_point(alpha=0.5, size=3, color="red") +
-  geom_text(aes(label=ifelse(gene %in% candidate_genes, gene, "")), hjust=1, vjust=0, fontface="bold") +
+  #geom_text(aes(label=ifelse(gene %in% candidate_genes, gene, "")), hjust=1, vjust=0, fontface="bold") +
+  geom_label_repel(aes(label=ifelse(gene %in% candidate_genes, gene, "")),
+                   box.padding   = 0.35, 
+                   point.padding = 0.5,
+                   segment.color = 'grey50') +
   xlab("log2 fold change risk allele(T)/major allele(C)") +
   ylab("log2 fold change KO/WT") +
   theme_bw() +
